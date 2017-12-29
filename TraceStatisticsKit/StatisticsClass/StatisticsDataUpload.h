@@ -10,5 +10,11 @@
 
 @interface StatisticsDataUpload : NSObject
 +(instancetype)uploadManager;
+
+/**
+ 文件上传方法 按照 参数格式传入需要上传的统计数据即可
+
+ @param dataList Array<NSDictionary>
+ */
 -(void)uploadWithData:(NSArray <NSDictionary *>*)dataList;
 @end

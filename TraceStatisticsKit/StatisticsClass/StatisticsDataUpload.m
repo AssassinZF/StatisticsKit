@@ -7,45 +7,41 @@
 //
 
 #import "StatisticsDataUpload.h"
+#import "BNTraceStatistics.h"
 
 #pragma mark - Task Model
 
-typedef void (^RTCompletioBlock)(NSDictionary *dic, NSURLResponse *response, NSError *error);
+@class UploadTask;
+typedef void (^RTCompletioBlock)(UploadTask *task, NSDictionary *dic, NSURLResponse *response, NSError *error);
 typedef void (^RTSuccessBlock)(NSDictionary *data);
 typedef void (^RTFailureBlock)(NSError *error);
 
 @interface UploadTask:NSOperation
 @property(nonatomic,strong)NSDictionary *dataDic;
-@property(nonatomic,copy)RTSuccessBlock sucBlock;
-@property(nonatomic,copy)RTFailureBlock failBlock;
-+(instancetype)taskData:(NSDictionary *)dataDic success:(RTSuccessBlock)sucBlock fail:(RTFailureBlock)failBlock;
+@property(nonatomic,copy)RTCompletioBlock resultBlock;
+
++(instancetype)taskData:(NSDictionary *)dataDic complection:(RTCompletioBlock)complectionBlock;
 @end
 
 @implementation UploadTask
 
-+(instancetype)taskData:(NSDictionary *)dataDic success:(RTSuccessBlock)sucBlock fail:(RTFailureBlock)failBlock{
++(instancetype)taskData:(NSDictionary *)dataDic complection:(RTCompletioBlock)complectionBlock{
     UploadTask *task = [[UploadTask alloc] init];
     if (task) {
         task.dataDic = dataDic;
-        task.sucBlock = sucBlock;
-        task.failBlock = failBlock;
+        task.resultBlock = complectionBlock;
     }
     return task;
 }
 
 -(void)main{
-    [[self class] postWithUrlString:@"" parameters:self.dataDic success:self.sucBlock failure:self.failBlock];
+    
+    [self postWithUrlString:@""
+                         parameters:self.dataDic
+                        complection:self.resultBlock];
 }
-+ (void)postWithUrlString:(NSString *)url parameters:(id)parameters success:(RTSuccessBlock)successBlock failure:(RTFailureBlock)failureBlock
+- (void)postWithUrlString:(NSString *)url parameters:(id)parameters complection:(RTCompletioBlock)complectionBlock
 {
-    NSDictionary *dic = (NSDictionary *)parameters;
-    NSLog(@"\n执行线程 -- %@ --- key : %@",[NSThread currentThread],dic.allKeys.lastObject);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        successBlock(parameters);
-    });
-    
-    return;
-    
     NSURL *nsurl = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl];
     //如果想要设置网络超时的时间的话，可以使用下面的方法：
@@ -68,12 +64,11 @@ typedef void (^RTFailureBlock)(NSError *error);
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error) { //请求失败
-            failureBlock(error);
-        } else {  //请求成功
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            successBlock(dic);
+        NSDictionary *dic = nil;
+        if (!error) { //请求失败
+            dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         }
+        complectionBlock(self,dic,response,error);
     }];
     [dataTask resume];  //开始请求
 }
@@ -94,6 +89,7 @@ static NSUInteger const KMaxConcurrentOperationCount = 10;
 
 
 @interface StatisticsDataUpload()
+@property(nonatomic,strong)NSMutableArray *requestFailKeyList;
 @property(nonatomic,strong)NSOperationQueue *queue;
 
 @end
@@ -119,7 +115,10 @@ static StatisticsDataUpload *instance = nil;
     for (NSDictionary *dic in dataList) {
         UploadTask *task = [UploadTask taskData:dic
                                         success:^(NSDictionary *data) {
-                                            NSLog(@"\n任务完成 key == %@",(NSString *)data.allKeys.lastObject);
+                                            if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
+                                                NSLog(@"\n任务上传成功: key = %@ , response = %@",task.dataDic.allKeys.lastObject,data);
+                                            }
+//                                            NSLog(@"\n任务完成 key == %@",(NSString *)data.allKeys.lastObject);
                                         } fail:^(NSError *error) {
                                             
                                         }];
@@ -133,6 +132,13 @@ static StatisticsDataUpload *instance = nil;
         _queue.maxConcurrentOperationCount = KMaxConcurrentOperationCount;//并发数不易过大
     }
     return _queue;
+}
+
+-(NSMutableArray *)requestFailKeyList{
+    if (!_requestFailKeyList) {
+        _requestFailKeyList = @[].mutableCopy;
+    }
+    return _requestFailKeyList;
 }
 
 @end
