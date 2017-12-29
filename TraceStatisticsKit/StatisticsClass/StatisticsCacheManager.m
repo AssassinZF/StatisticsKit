@@ -8,6 +8,8 @@
 
 #import "StatisticsCacheManager.h"
 #import "BNTraceStatistics.h"
+#import "ChunkUploadModel.h"
+#import "StatisticsDataUpload.h"
 
 //存放所有搜集到的事件的文件名
 static NSString * const KAllCollectEventFile = @"AllCollectEventFile";
@@ -16,7 +18,7 @@ static NSString * const KPackEventWaitUpdateFile = @"PackEventWaitUpdateFile";
 
 @interface StatisticsCacheManager()
 @property(nonatomic,strong,readwrite)NSMutableArray *eventArray;
-@property(nonatomic,strong,readwrite)NSMutableArray *waitUpdateData;
+@property(nonatomic,strong,readwrite)NSMutableArray <ChunkUploadModel *>*waitUpdateData;
 @property(nonatomic,strong)NSTimer *timer;
 @end
 
@@ -61,44 +63,44 @@ static StatisticsCacheManager *instance = nil;
         NSLog(@"统计时间间隔已到, 当前缓存数量--%ld",self.eventArray.count);
     }
     if (self.eventArray.count) {
-        //打包上传
+        //定时时间到 打包所有数据 进行上传
+        [self startUploadStatisticData];
     }
     
 }
 
 
 -(void)saveEventData:(EventInfo *)eventInfo{
-    
-    [self.eventArray addObject:eventInfo];
-    [self archiveData:self.eventArray fileName:KAllCollectEventFile];
-    [self startUploadStatisticData];
-    
-//    NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[self filePath:KAllCollectEventFile]];
-//    NSMutableArray *dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//    NSLog(@"%@",dataArray);
-
-    
+    [self.eventArray addObject:eventInfo];//缓存到内存中
+    [self archiveData:self.eventArray fileName:KAllCollectEventFile];//缓存到磁盘
+    [self startUploadStatisticData];//检查是否可以上传
 }
 
 -(void)startUploadStatisticData{
     if ([BNTraceStatistics statisticsInstance].updateWay == UpdateWayAmount && ![self checkStartPackUpload]){
-        return;
+        return;//暂未达到上传要求 等待中
     }
-    
+    [self packChunkData];//打包需要上传的数据
+    for (ChunkUploadModel *model in self.waitUpdateData) {
+        if (model.status != RequestStatusUploading && model.status == RequestStatusSuccess) {
+            //继续提交上传
+            [[StatisticsDataUpload uploadManager] uploadWithData:model];
+        }
+    }
 }
 
 -(void)packChunkData{
-    BNTraceStatistics *statistic = [BNTraceStatistics statisticsInstance];
-    if (statistic.updateWay == UpdateWayTime) {
-        NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:KAllCollectEventFile]];
-        NSMutableArray *dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        NSMutableDictionary *dic = @{}.mutableCopy;
-        [dic setValue:dataArray forKey:[self randomStringId]];
-        [self.waitUpdateData addObject:dic];
-        //保存准备上传的包数据
-        [self archiveData:self.waitUpdateData fileName:KPackEventWaitUpdateFile];
+    NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:KAllCollectEventFile]];
+    NSMutableArray *dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    ChunkUploadModel *uploadModel = [[ChunkUploadModel alloc] init];
+    uploadModel.dataArray = dataArray;
+    uploadModel.identifier = [self randomStringId];
+    [self.waitUpdateData addObject:uploadModel];
+    //保存准备上传的包数据
+    BOOL flag = [self archiveData:self.waitUpdateData fileName:KPackEventWaitUpdateFile];
+    if (flag) {
+        [self clearFile:KAllCollectEventFile];//确保数据打包等待上传并且缓存成功 清理该文件
     }
-
 }
 
 
@@ -107,17 +109,20 @@ static StatisticsCacheManager *instance = nil;
     NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:data];
     BOOL isSuc = [NSKeyedArchiver archiveRootObject:newData toFile:[[self class] filePath:fileName]];
     if (!isSuc && [BNTraceStatistics statisticsInstance].isLogEnabled) {
-        NSLog(@"统计事件归档失败");
+        NSLog(@"归档失败");
         return NO;
     }
     return YES;
 }
 
--(void)removeWaitUplaodData:(NSString *)key{
-    for (NSDictionary *dic in self.waitUpdateData) {
-        if (dic[key]) {
-            
-        }
+-(void)removeWaitUplaodData:(ChunkUploadModel *)uploadData{
+    if (uploadData)return;
+    if ([self.waitUpdateData containsObject:uploadData]) {
+        [self.waitUpdateData removeObject:uploadData];
+    }
+    BOOL flag = [self archiveData:self.waitUpdateData fileName:KPackEventWaitUpdateFile];
+    if ([BNTraceStatistics statisticsInstance].isLogEnabled && flag) {
+        NSLog(@"\n 一次数据上报成功，并且成功删除 磁盘缓存已更新");
     }
 }
 
@@ -142,7 +147,7 @@ static StatisticsCacheManager *instance = nil;
     return _eventArray;
 }
 
--(NSMutableArray *)waitUpdateData{
+-(NSMutableArray <ChunkUploadModel *>*)waitUpdateData{
     if (!_waitUpdateData) {
         _waitUpdateData = @[].mutableCopy;
         NSMutableArray *cacheData = [self getCacheData:KPackEventWaitUpdateFile];

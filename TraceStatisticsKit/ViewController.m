@@ -16,11 +16,6 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(100, 100, 100, 100);
-    button.backgroundColor = [UIColor blueColor];
-    [button addTarget:self action:@selector(clickCustomBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
 }
 
 - (void)viewDidLoad {

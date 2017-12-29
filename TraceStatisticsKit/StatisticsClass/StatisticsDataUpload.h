@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class ChunkUploadModel;
 
 @interface StatisticsDataUpload : NSObject
 +(instancetype)uploadManager;
@@ -16,5 +17,5 @@
 
  @param dataList Array<NSDictionary>
  */
--(void)uploadWithData:(NSArray <NSDictionary *>*)dataList;
+-(void)uploadWithData:(ChunkUploadModel *)dataList;
 @end

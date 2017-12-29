@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-@class EventInfo;
+@class EventInfo , ChunkUploadModel;
 @interface StatisticsCacheManager : NSObject
 
 @property(nonatomic,strong,readonly)NSMutableArray *eventArray;
-@property(nonatomic,strong,readonly)NSMutableArray *waitUpdateData;
+@property(nonatomic,strong,readonly)NSMutableArray <ChunkUploadModel *>*waitUpdateData;
 
 +(instancetype)cacheManager;
 
 -(void)saveEventData:(EventInfo *)eventInfo;
 
--(void)removeWaitUplaodData:(NSString *)key;
+-(void)removeWaitUplaodData:(ChunkUploadModel *)uploadData;
 @end

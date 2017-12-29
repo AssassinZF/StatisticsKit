@@ -8,6 +8,7 @@
 
 #import "StatisticsDataUpload.h"
 #import "BNTraceStatistics.h"
+#import "ChunkUploadModel.h"
 
 #pragma mark - Task Model
 
@@ -17,18 +18,18 @@ typedef void (^RTSuccessBlock)(NSDictionary *data);
 typedef void (^RTFailureBlock)(NSError *error);
 
 @interface UploadTask:NSOperation
-@property(nonatomic,strong)NSDictionary *dataDic;
+@property(nonatomic,strong)ChunkUploadModel *data;
 @property(nonatomic,copy)RTCompletioBlock resultBlock;
 
-+(instancetype)taskData:(NSDictionary *)dataDic complection:(RTCompletioBlock)complectionBlock;
++(instancetype)taskData:(ChunkUploadModel *)data complection:(RTCompletioBlock)complectionBlock;
 @end
 
 @implementation UploadTask
 
-+(instancetype)taskData:(NSDictionary *)dataDic complection:(RTCompletioBlock)complectionBlock{
++(instancetype)taskData:(ChunkUploadModel *)data complection:(RTCompletioBlock)complectionBlock{
     UploadTask *task = [[UploadTask alloc] init];
     if (task) {
-        task.dataDic = dataDic;
+        task.data = data;
         task.resultBlock = complectionBlock;
     }
     return task;
@@ -36,8 +37,8 @@ typedef void (^RTFailureBlock)(NSError *error);
 
 -(void)main{
     
-    [self postWithUrlString:@""
-                         parameters:self.dataDic
+    [self postWithUrlString:self.data.requestApi
+                         parameters:self.data
                         complection:self.resultBlock];
 }
 - (void)postWithUrlString:(NSString *)url parameters:(id)parameters complection:(RTCompletioBlock)complectionBlock
@@ -107,23 +108,21 @@ static StatisticsDataUpload *instance = nil;
     return instance;
 }
 
--(void)uploadWithData:(NSArray <NSDictionary *>*)dataList{
-    if (!dataList.count) {
-        return;
-    }
+-(void)uploadWithData:(ChunkUploadModel *)data{
+    if (!data) return;
+    UploadTask *task = [UploadTask taskData:data
+                                complection:^(UploadTask *task, NSDictionary *dic, NSURLResponse *response, NSError *error) {
+                                    if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
+                                        NSLog(@"\n 统计上报结果：\n identifier = %@ \n response = %@ ",task.data.identifier,dic);
+                                    }
+                                    if (error) {
+                                        
+                                    }else{
+                                        
+                                    }
+                                }];
+    [self.queue addOperation:task]; // task start run
     
-    for (NSDictionary *dic in dataList) {
-        UploadTask *task = [UploadTask taskData:dic
-                                        success:^(NSDictionary *data) {
-                                            if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
-                                                NSLog(@"\n任务上传成功: key = %@ , response = %@",task.dataDic.allKeys.lastObject,data);
-                                            }
-//                                            NSLog(@"\n任务完成 key == %@",(NSString *)data.allKeys.lastObject);
-                                        } fail:^(NSError *error) {
-                                            
-                                        }];
-        [self.queue addOperation:task]; // task start run
-    }
 }
 
 -(NSOperationQueue *)queue{

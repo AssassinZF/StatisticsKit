@@ -24,6 +24,7 @@
 		011060B01FF47CEA00649178 /* ConfigureStatistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 011060AF1FF47CEA00649178 /* ConfigureStatistics.plist */; };
 		011060B31FF47D5800649178 /* StatisticsCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B21FF47D5800649178 /* StatisticsCacheManager.m */; };
 		011060B61FF4C48700649178 /* StatisticsDataUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B51FF4C48700649178 /* StatisticsDataUpload.m */; };
+		011060B91FF6248900649178 /* ChunkUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B81FF6248900649178 /* ChunkUploadModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		011060B21FF47D5800649178 /* StatisticsCacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatisticsCacheManager.m; sourceTree = "<group>"; };
 		011060B41FF4C48700649178 /* StatisticsDataUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatisticsDataUpload.h; sourceTree = "<group>"; };
 		011060B51FF4C48700649178 /* StatisticsDataUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatisticsDataUpload.m; sourceTree = "<group>"; };
+		011060B71FF6248900649178 /* ChunkUploadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChunkUploadModel.h; sourceTree = "<group>"; };
+		011060B81FF6248900649178 /* ChunkUploadModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChunkUploadModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +192,8 @@
 				011060A41FF3840F00649178 /* AppInfo.m */,
 				011060AC1FF39BEC00649178 /* EventInfo.h */,
 				011060AD1FF39BEC00649178 /* EventInfo.m */,
+				011060B71FF6248900649178 /* ChunkUploadModel.h */,
+				011060B81FF6248900649178 /* ChunkUploadModel.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				011060B91FF6248900649178 /* ChunkUploadModel.m in Sources */,
 				0110605F1FF3375900649178 /* ViewController.m in Sources */,
 				011060A51FF3840F00649178 /* AppInfo.m in Sources */,
 				011060A01FF3789C00649178 /* BNTraceStatistics.m in Sources */,

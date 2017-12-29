@@ -16,19 +16,56 @@ typedef NS_ENUM(NSInteger,UpdateWay) {
 @interface BNTraceStatistics : NSObject
 @property (nonatomic,assign) BOOL isLogEnabled;
 
+/**
+ 上传方式 ：按照数量 / 按照时间
+ */
 @property(nonatomic,assign,readonly)UpdateWay updateWay;
+
+/**
+ 多少条开始上传 （可修改）
+ */
 @property(nonatomic,assign,readonly)NSUInteger amount;
+
+/**
+ 多长时间间隔上传上传一次 （可修改）
+ */
 @property(nonatomic,assign,readonly)NSInteger time;
+
+/**
+ appKey
+ */
 @property(nonatomic,copy,readonly)NSString *appKey;
+
+
+/**
+ 配置文件
+ */
 @property(nonatomic,strong,readonly)NSMutableDictionary *congigurePlistDic;
+
+/**
+ domin url
+ */
 @property(nonatomic,copy,readonly)NSString *serverUrl;
 
 
 +(instancetype)statisticsInstance;
 +(void)clearInstance;
 
+
+/**
+ init
+
+ @param appKey appkey
+ @param way 上传方式
+ */
 +(void)initWithAppKey:(NSString *)appKey statisticsWay:(UpdateWay)way;
 
+
+/**
+ 改变方式阈值
+
+ @param amount 数量
+ */
 +(void)changeAmount:(NSInteger)amount;//default 10条 上报一次
 +(void)changeTime:(NSInteger)time;//default 30s 上报一次
 
