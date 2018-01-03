@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "WebTestViewController.h"
 @interface ViewController ()
 
 @end
@@ -18,17 +18,36 @@
     [super viewDidAppear:animated];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-}
-- (IBAction)clickTest:(id)sender {
-    NSLog(@"点击了 clickTest");
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
--(void)clickCustomBtn{
-    NSLog(@"点击了 clickCustomBtn");
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"enter webview" forState:UIControlStateNormal];
+    btn.backgroundColor = [UIColor purpleColor];
+    [btn addTarget:self action:@selector(clickTest:) forControlEvents:UIControlEventTouchUpInside];
+    btn.frame = CGRectMake(100, 100, 100, 30);
+    [self.view addSubview:btn];
+    // Do any additional setup after loading the view, typically from a nib.
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+    [tap addTarget:self action:@selector(clickTapGesture:)];
+    [self.view addGestureRecognizer:tap];
 }
+
+-(void)clickTapGesture:(UIGestureRecognizer *)gesture{
+    NSLog(@"tap gesture");
+}
+
+- (void)clickTest:(id)sender {
+    WebTestViewController *webpage = [[WebTestViewController alloc] init];
+    [self.navigationController pushViewController:webpage animated:YES];
+}
+
 
 
 - (void)didReceiveMemoryWarning {

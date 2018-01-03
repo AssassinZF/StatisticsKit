@@ -11,6 +11,7 @@
 #import "StatisticsCacheManager.h"
 #import "EventInfo.h"
 #import "StatisticsDataUpload.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -33,6 +34,11 @@
 //                          @{@"9":@[@"9"]},
 //                          ];
 //    [[StatisticsDataUpload uploadManager] uploadWithData:list];
+    [BNTraceStatistics initWithAppKey:@"123" statisticsWay:UpdateWayAmount];
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
+    self.window.rootViewController = nav;
+    
     return YES;
 }
 

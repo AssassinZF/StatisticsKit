@@ -15,16 +15,22 @@
 		0110606A1FF3375900649178 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060691FF3375900649178 /* main.m */; };
 		011060741FF3375900649178 /* TraceStatisticsKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060731FF3375900649178 /* TraceStatisticsKitTests.m */; };
 		0110607F1FF3375900649178 /* TraceStatisticsKitUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0110607E1FF3375900649178 /* TraceStatisticsKitUITests.m */; };
-		011060961FF337DE00649178 /* UIViewController+VCStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060931FF337DE00649178 /* UIViewController+VCStatistics.m */; };
-		011060971FF337DE00649178 /* HookTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060941FF337DE00649178 /* HookTool.m */; };
 		011060A01FF3789C00649178 /* BNTraceStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0110609F1FF3789C00649178 /* BNTraceStatistics.m */; };
 		011060A51FF3840F00649178 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060A41FF3840F00649178 /* AppInfo.m */; };
-		011060A81FF38C7200649178 /* UIApplication+Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060A71FF38C7200649178 /* UIApplication+Event.m */; };
 		011060AE1FF39BEC00649178 /* EventInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060AD1FF39BEC00649178 /* EventInfo.m */; };
 		011060B01FF47CEA00649178 /* ConfigureStatistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 011060AF1FF47CEA00649178 /* ConfigureStatistics.plist */; };
 		011060B31FF47D5800649178 /* StatisticsCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B21FF47D5800649178 /* StatisticsCacheManager.m */; };
 		011060B61FF4C48700649178 /* StatisticsDataUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B51FF4C48700649178 /* StatisticsDataUpload.m */; };
 		011060B91FF6248900649178 /* ChunkUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B81FF6248900649178 /* ChunkUploadModel.m */; };
+		01122FC71FFC72DC0043796C /* FilterEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FC61FFC72DC0043796C /* FilterEvent.m */; };
+		01122FD41FFC7C910043796C /* UIApplication+Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FCE1FFC7C910043796C /* UIApplication+Event.m */; };
+		01122FD51FFC7C910043796C /* UIViewController+VCStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FD01FFC7C910043796C /* UIViewController+VCStatistics.m */; };
+		01122FD61FFC7C910043796C /* HookTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FD31FFC7C910043796C /* HookTool.m */; };
+		01122FE01FFC7E790043796C /* WebTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FDE1FFC7E790043796C /* WebTestViewController.m */; };
+		01122FE11FFC7E790043796C /* WebTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01122FDF1FFC7E790043796C /* WebTestViewController.xib */; };
+		01122FE41FFC7F150043796C /* UIWebView+webViewLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FE31FFC7F150043796C /* UIWebView+webViewLoad.m */; };
+		01122FE81FFCB8470043796C /* UINavigationController+hookBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FE71FFCB8470043796C /* UINavigationController+hookBarItem.m */; };
+		01122FEB1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FEA1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,17 +67,11 @@
 		0110607A1FF3375900649178 /* TraceStatisticsKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TraceStatisticsKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0110607E1FF3375900649178 /* TraceStatisticsKitUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TraceStatisticsKitUITests.m; sourceTree = "<group>"; };
 		011060801FF3375900649178 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		011060921FF337DD00649178 /* UIViewController+VCStatistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+VCStatistics.h"; sourceTree = "<group>"; };
-		011060931FF337DE00649178 /* UIViewController+VCStatistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+VCStatistics.m"; sourceTree = "<group>"; };
-		011060941FF337DE00649178 /* HookTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HookTool.m; sourceTree = "<group>"; };
-		011060951FF337DE00649178 /* HookTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HookTool.h; sourceTree = "<group>"; };
 		0110609E1FF3789C00649178 /* BNTraceStatistics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNTraceStatistics.h; sourceTree = "<group>"; };
 		0110609F1FF3789C00649178 /* BNTraceStatistics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNTraceStatistics.m; sourceTree = "<group>"; };
 		011060A11FF3839B00649178 /* iKYSerializationDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKYSerializationDefine.h; sourceTree = "<group>"; };
 		011060A31FF3840F00649178 /* AppInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
 		011060A41FF3840F00649178 /* AppInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppInfo.m; sourceTree = "<group>"; };
-		011060A61FF38C7200649178 /* UIApplication+Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Event.h"; sourceTree = "<group>"; };
-		011060A71FF38C7200649178 /* UIApplication+Event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Event.m"; sourceTree = "<group>"; };
 		011060AC1FF39BEC00649178 /* EventInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventInfo.h; sourceTree = "<group>"; };
 		011060AD1FF39BEC00649178 /* EventInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventInfo.m; sourceTree = "<group>"; };
 		011060AF1FF47CEA00649178 /* ConfigureStatistics.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ConfigureStatistics.plist; sourceTree = "<group>"; };
@@ -81,6 +81,23 @@
 		011060B51FF4C48700649178 /* StatisticsDataUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatisticsDataUpload.m; sourceTree = "<group>"; };
 		011060B71FF6248900649178 /* ChunkUploadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChunkUploadModel.h; sourceTree = "<group>"; };
 		011060B81FF6248900649178 /* ChunkUploadModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChunkUploadModel.m; sourceTree = "<group>"; };
+		01122FC51FFC72DC0043796C /* FilterEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilterEvent.h; sourceTree = "<group>"; };
+		01122FC61FFC72DC0043796C /* FilterEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilterEvent.m; sourceTree = "<group>"; };
+		01122FCE1FFC7C910043796C /* UIApplication+Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+Event.m"; sourceTree = "<group>"; };
+		01122FCF1FFC7C910043796C /* HookTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HookTool.h; sourceTree = "<group>"; };
+		01122FD01FFC7C910043796C /* UIViewController+VCStatistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+VCStatistics.m"; sourceTree = "<group>"; };
+		01122FD11FFC7C910043796C /* UIApplication+Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+Event.h"; sourceTree = "<group>"; };
+		01122FD21FFC7C910043796C /* UIViewController+VCStatistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+VCStatistics.h"; sourceTree = "<group>"; };
+		01122FD31FFC7C910043796C /* HookTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HookTool.m; sourceTree = "<group>"; };
+		01122FDD1FFC7E790043796C /* WebTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebTestViewController.h; sourceTree = "<group>"; };
+		01122FDE1FFC7E790043796C /* WebTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebTestViewController.m; sourceTree = "<group>"; };
+		01122FDF1FFC7E790043796C /* WebTestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebTestViewController.xib; sourceTree = "<group>"; };
+		01122FE21FFC7F150043796C /* UIWebView+webViewLoad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIWebView+webViewLoad.h"; sourceTree = "<group>"; };
+		01122FE31FFC7F150043796C /* UIWebView+webViewLoad.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+webViewLoad.m"; sourceTree = "<group>"; };
+		01122FE61FFCB8470043796C /* UINavigationController+hookBarItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+hookBarItem.h"; sourceTree = "<group>"; };
+		01122FE71FFCB8470043796C /* UINavigationController+hookBarItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+hookBarItem.m"; sourceTree = "<group>"; };
+		01122FE91FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+GestureHook.h"; sourceTree = "<group>"; };
+		01122FEA1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+GestureHook.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +153,9 @@
 				0110605B1FF3375900649178 /* AppDelegate.m */,
 				0110605D1FF3375900649178 /* ViewController.h */,
 				0110605E1FF3375900649178 /* ViewController.m */,
+				01122FDD1FFC7E790043796C /* WebTestViewController.h */,
+				01122FDE1FFC7E790043796C /* WebTestViewController.m */,
+				01122FDF1FFC7E790043796C /* WebTestViewController.xib */,
 				011060601FF3375900649178 /* Main.storyboard */,
 				011060631FF3375900649178 /* Assets.xcassets */,
 				011060651FF3375900649178 /* LaunchScreen.storyboard */,
@@ -166,14 +186,11 @@
 		0110608C1FF3375F00649178 /* StatisticsClass */ = {
 			isa = PBXGroup;
 			children = (
+				01122FCD1FFC7C910043796C /* HookClass */,
 				011060A21FF383BA00649178 /* DataModel */,
 				011060A11FF3839B00649178 /* iKYSerializationDefine.h */,
-				011060951FF337DE00649178 /* HookTool.h */,
-				011060941FF337DE00649178 /* HookTool.m */,
-				011060921FF337DD00649178 /* UIViewController+VCStatistics.h */,
-				011060931FF337DE00649178 /* UIViewController+VCStatistics.m */,
-				011060A61FF38C7200649178 /* UIApplication+Event.h */,
-				011060A71FF38C7200649178 /* UIApplication+Event.m */,
+				01122FC51FFC72DC0043796C /* FilterEvent.h */,
+				01122FC61FFC72DC0043796C /* FilterEvent.m */,
 				0110609E1FF3789C00649178 /* BNTraceStatistics.h */,
 				0110609F1FF3789C00649178 /* BNTraceStatistics.m */,
 				011060B11FF47D5800649178 /* StatisticsCacheManager.h */,
@@ -196,6 +213,25 @@
 				011060B81FF6248900649178 /* ChunkUploadModel.m */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		01122FCD1FFC7C910043796C /* HookClass */ = {
+			isa = PBXGroup;
+			children = (
+				01122FCF1FFC7C910043796C /* HookTool.h */,
+				01122FD31FFC7C910043796C /* HookTool.m */,
+				01122FD11FFC7C910043796C /* UIApplication+Event.h */,
+				01122FCE1FFC7C910043796C /* UIApplication+Event.m */,
+				01122FD21FFC7C910043796C /* UIViewController+VCStatistics.h */,
+				01122FD01FFC7C910043796C /* UIViewController+VCStatistics.m */,
+				01122FE21FFC7F150043796C /* UIWebView+webViewLoad.h */,
+				01122FE31FFC7F150043796C /* UIWebView+webViewLoad.m */,
+				01122FE91FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.h */,
+				01122FEA1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m */,
+				01122FE61FFCB8470043796C /* UINavigationController+hookBarItem.h */,
+				01122FE71FFCB8470043796C /* UINavigationController+hookBarItem.m */,
+			);
+			path = HookClass;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,6 +342,7 @@
 			files = (
 				011060B01FF47CEA00649178 /* ConfigureStatistics.plist in Resources */,
 				011060671FF3375900649178 /* LaunchScreen.storyboard in Resources */,
+				01122FE11FFC7E790043796C /* WebTestViewController.xib in Resources */,
 				011060641FF3375900649178 /* Assets.xcassets in Resources */,
 				011060621FF3375900649178 /* Main.storyboard in Resources */,
 			);
@@ -333,16 +370,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				011060B91FF6248900649178 /* ChunkUploadModel.m in Sources */,
+				01122FE81FFCB8470043796C /* UINavigationController+hookBarItem.m in Sources */,
+				01122FC71FFC72DC0043796C /* FilterEvent.m in Sources */,
+				01122FD51FFC7C910043796C /* UIViewController+VCStatistics.m in Sources */,
+				01122FE01FFC7E790043796C /* WebTestViewController.m in Sources */,
 				0110605F1FF3375900649178 /* ViewController.m in Sources */,
 				011060A51FF3840F00649178 /* AppInfo.m in Sources */,
 				011060A01FF3789C00649178 /* BNTraceStatistics.m in Sources */,
 				0110606A1FF3375900649178 /* main.m in Sources */,
 				011060B61FF4C48700649178 /* StatisticsDataUpload.m in Sources */,
-				011060971FF337DE00649178 /* HookTool.m in Sources */,
-				011060961FF337DE00649178 /* UIViewController+VCStatistics.m in Sources */,
+				01122FD41FFC7C910043796C /* UIApplication+Event.m in Sources */,
 				0110605C1FF3375900649178 /* AppDelegate.m in Sources */,
+				01122FEB1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m in Sources */,
+				01122FD61FFC7C910043796C /* HookTool.m in Sources */,
+				01122FE41FFC7F150043796C /* UIWebView+webViewLoad.m in Sources */,
 				011060AE1FF39BEC00649178 /* EventInfo.m in Sources */,
-				011060A81FF38C7200649178 /* UIApplication+Event.m in Sources */,
 				011060B31FF47D5800649178 /* StatisticsCacheManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

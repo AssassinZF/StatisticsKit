@@ -40,6 +40,7 @@ static BNTraceStatistics *instance = nil;
     if (self) {
         self.amount = KAMOUNT;
         self.time = KTIME;
+        self.isLogEnabled = YES;
         [self addNotificationCenter];
         NSString *url = self.congigurePlistDic[@"Server"];
         NSAssert(url.length > 0, @"plist 文件 缺少配置服务URL");
@@ -67,8 +68,21 @@ static BNTraceStatistics *instance = nil;
                     selector:@selector(becomeActive:)
                         name:UIApplicationDidBecomeActiveNotification
                       object:nil];
-
+    
+    [notifCenter addObserver:self
+                    selector:@selector(didFinishLaunchingNotification:)
+                        name:UIApplicationDidFinishLaunchingNotification
+                      object:nil];
+    
 }
+
+-(void)didFinishLaunchingNotification:(NSNotification *)noti{
+    if (self.isLogEnabled) {
+        NSLog(@"APP 启动了");
+    }
+    
+}
+
 
 -(void)resignActive:(NSNotification *)notification{
     if (self.isLogEnabled) {

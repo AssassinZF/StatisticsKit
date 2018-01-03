@@ -83,7 +83,7 @@ static StatisticsCacheManager *instance = nil;
     [self packChunkData];//打包需要上传的数据
     for (ChunkUploadModel *model in self.waitUpdateData) {
         if (model.status != RequestStatusUploading && model.status == RequestStatusSuccess) {
-            //继续提交上传
+            //发现有上传失败的时候 继续提交上传
             [[StatisticsDataUpload uploadManager] uploadWithData:model];
         }
     }

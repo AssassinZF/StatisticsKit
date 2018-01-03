@@ -8,5 +8,5 @@
 #import <Foundation/Foundation.h>
 
 @interface HookTool : NSObject
-+ (void)swizzlingInClass:(Class)cls originalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector;
++ (void)swizzlingInClass:(Class)cls targetClass:(Class)targetCls originalSelector:(SEL)originalSelector swizzledSelector:(SEL)swizzledSelector;
 @end

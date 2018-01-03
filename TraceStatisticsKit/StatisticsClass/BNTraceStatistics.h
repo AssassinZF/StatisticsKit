@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger,UpdateWay) {
 };
 
 @interface BNTraceStatistics : NSObject
-@property (nonatomic,assign) BOOL isLogEnabled;
+@property (nonatomic,assign) BOOL isLogEnabled; //default open
 
 /**
  上传方式 ：按照数量 / 按照时间
