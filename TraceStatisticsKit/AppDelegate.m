@@ -12,6 +12,7 @@
 #import "EventInfo.h"
 #import "StatisticsDataUpload.h"
 #import "ViewController.h"
+#import "PAirSandbox.h"
 
 @interface AppDelegate ()
 
@@ -21,20 +22,16 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    EventInfo *info = [EventInfo new];
-//    info.label = @"test";
-//    NSArray *list = @[@{@"1":@[@"1"]},
-//                          @{@"2":@[@"2"]},
-//                          @{@"3":@[@"3"]},
-//                          @{@"4":@[@"4"]},
-//                          @{@"5":@[@"5"]},
-//                          @{@"6":@[@"6"]},
-//                          @{@"7":@[@"7"]},
-//                          @{@"8":@[@"8"]},
-//                          @{@"9":@[@"9"]},
-//                          ];
-//    [[StatisticsDataUpload uploadManager] uploadWithData:list];
+    
+    
     [BNTraceStatistics initWithAppKey:@"123" statisticsWay:UpdateWayAmount];
+    
+    
+#ifdef DEBUG
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[PAirSandbox sharedInstance] enableSwipe];
+    });
+#endif
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     self.window.rootViewController = nav;

@@ -34,19 +34,14 @@ static BNTraceStatistics *instance = nil;
     return instance;
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.amount = KAMOUNT;
-        self.time = KTIME;
-        self.isLogEnabled = YES;
-        [self addNotificationCenter];
-        NSString *url = self.congigurePlistDic[@"Server"];
-        NSAssert(url.length > 0, @"plist 文件 缺少配置服务URL");
-        self.serverUrl = url;
-    }
-    return self;
+-(void)settingDefaultParam{
+    self.amount = KAMOUNT;
+    self.time = KTIME;
+    self.isLogEnabled = YES;
+    [self addNotificationCenter];
+    NSString *url = self.congigurePlistDic[@"Server"];
+    NSAssert(url.length > 0, @"plist 文件 缺少配置服务URL");
+    self.serverUrl = url;
 }
 
 +(void)initWithAppKey:(NSString *)appKey statisticsWay:(UpdateWay)way{
@@ -54,6 +49,7 @@ static BNTraceStatistics *instance = nil;
     BNTraceStatistics *instance = [BNTraceStatistics statisticsInstance];
     instance.updateWay = way;
     instance.appKey = appKey;
+    [instance settingDefaultParam];
 }
 
 #pragma mark - NotificationCenter
@@ -119,6 +115,10 @@ static BNTraceStatistics *instance = nil;
         NSLog(@"必须调用 +initWithAppKey:statisticsWay 初始化");
         return NO;
     }
+    return YES;
+}
+
++(BOOL)checkUpdateVersion{
     return YES;
 }
 

@@ -31,6 +31,8 @@
 		01122FE41FFC7F150043796C /* UIWebView+webViewLoad.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FE31FFC7F150043796C /* UIWebView+webViewLoad.m */; };
 		01122FE81FFCB8470043796C /* UINavigationController+hookBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FE71FFCB8470043796C /* UINavigationController+hookBarItem.m */; };
 		01122FEB1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FEA1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m */; };
+		01122FF31FFCDDD90043796C /* EventModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FF21FFCDDD90043796C /* EventModel.m */; };
+		01122FFB1FFCF50F0043796C /* PAirSandbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 01122FF91FFCF50F0043796C /* PAirSandbox.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +100,10 @@
 		01122FE71FFCB8470043796C /* UINavigationController+hookBarItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+hookBarItem.m"; sourceTree = "<group>"; };
 		01122FE91FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+GestureHook.h"; sourceTree = "<group>"; };
 		01122FEA1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+GestureHook.m"; sourceTree = "<group>"; };
+		01122FF11FFCDDD90043796C /* EventModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventModel.h; sourceTree = "<group>"; };
+		01122FF21FFCDDD90043796C /* EventModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventModel.m; sourceTree = "<group>"; };
+		01122FF91FFCF50F0043796C /* PAirSandbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAirSandbox.m; sourceTree = "<group>"; };
+		01122FFA1FFCF50F0043796C /* PAirSandbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAirSandbox.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,7 @@
 		011060591FF3375900649178 /* TraceStatisticsKit */ = {
 			isa = PBXGroup;
 			children = (
+				01122FF81FFCF50F0043796C /* AirSandbox */,
 				0110608C1FF3375F00649178 /* StatisticsClass */,
 				0110605A1FF3375900649178 /* AppDelegate.h */,
 				0110605B1FF3375900649178 /* AppDelegate.m */,
@@ -211,6 +218,8 @@
 				011060AD1FF39BEC00649178 /* EventInfo.m */,
 				011060B71FF6248900649178 /* ChunkUploadModel.h */,
 				011060B81FF6248900649178 /* ChunkUploadModel.m */,
+				01122FF11FFCDDD90043796C /* EventModel.h */,
+				01122FF21FFCDDD90043796C /* EventModel.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -232,6 +241,15 @@
 				01122FE71FFCB8470043796C /* UINavigationController+hookBarItem.m */,
 			);
 			path = HookClass;
+			sourceTree = "<group>";
+		};
+		01122FF81FFCF50F0043796C /* AirSandbox */ = {
+			isa = PBXGroup;
+			children = (
+				01122FF91FFCF50F0043796C /* PAirSandbox.m */,
+				01122FFA1FFCF50F0043796C /* PAirSandbox.h */,
+			);
+			path = AirSandbox;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +319,7 @@
 				TargetAttributes = {
 					011060561FF3375900649178 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					0110606E1FF3375900649178 = {
@@ -383,7 +402,9 @@
 				0110605C1FF3375900649178 /* AppDelegate.m in Sources */,
 				01122FEB1FFCCCAB0043796C /* UIGestureRecognizer+GestureHook.m in Sources */,
 				01122FD61FFC7C910043796C /* HookTool.m in Sources */,
+				01122FF31FFCDDD90043796C /* EventModel.m in Sources */,
 				01122FE41FFC7F150043796C /* UIWebView+webViewLoad.m in Sources */,
+				01122FFB1FFCF50F0043796C /* PAirSandbox.m in Sources */,
 				011060AE1FF39BEC00649178 /* EventInfo.m in Sources */,
 				011060B31FF47D5800649178 /* StatisticsCacheManager.m in Sources */,
 			);
@@ -472,6 +493,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -527,6 +549,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -548,12 +571,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CX9244259Y;
 				INFOPLIST_FILE = TraceStatisticsKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.feng.test.1.TraceStatisticsKit;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = TraceStatisticsKit;
+				PRODUCT_NAME = TraceStatisticsKit;
+				SWIFT_OBJC_BRIDGING_HEADER = "TraceStatisticsKit/TraceStatisticsKit-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -562,12 +592,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CX9244259Y;
 				INFOPLIST_FILE = TraceStatisticsKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.feng.test.1.TraceStatisticsKit;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = TraceStatisticsKit;
+				PRODUCT_NAME = TraceStatisticsKit;
+				SWIFT_OBJC_BRIDGING_HEADER = "TraceStatisticsKit/TraceStatisticsKit-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

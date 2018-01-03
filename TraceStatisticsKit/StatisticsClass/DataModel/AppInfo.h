@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EventModel.h"
 
-@interface AppInfo : NSObject
+@interface AppInfo : EventModel
 @property (nonatomic,strong) NSString *appKey;
 @property (nonatomic,strong) NSString *appVersion;
 @property (nonatomic,strong) NSString *userIdentifier;

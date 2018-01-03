@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "EventModel.h"
 
-@interface EventInfo : NSObject
+@interface EventInfo : EventModel
 @property (nonatomic, copy) NSString *event_id;
 @property (nonatomic, copy) NSString *time;
 @property (nonatomic, copy) NSString *activity;

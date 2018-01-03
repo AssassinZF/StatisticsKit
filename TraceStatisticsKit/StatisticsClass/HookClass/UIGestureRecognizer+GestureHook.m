@@ -18,7 +18,7 @@
         SEL originalSelector = @selector(initWithTarget:action:);
         SEL swizzledSelector = @selector(swiz_initWithTarget:action:);
         [HookTool swizzlingInClass:[self class] targetClass:[self class] originalSelector:originalSelector swizzledSelector:swizzledSelector];
-        
+
         SEL originalSelector1 = @selector(addTarget:action:);
         SEL swizzledSelector1 = @selector(swiz_addTarget:action:);
         [HookTool swizzlingInClass:[self class] targetClass:[self class] originalSelector:originalSelector1 swizzledSelector:swizzledSelector1];

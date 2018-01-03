@@ -48,6 +48,12 @@ typedef NS_ENUM(NSInteger,UpdateWay) {
 @property(nonatomic,copy,readonly)NSString *serverUrl;
 
 
+/**
+ 是否允许程序自动检查最新版本 作出提示 default NO
+ */
+@property(nonatomic,assign)BOOL allowCheckUpdateVersion;
+
+
 +(instancetype)statisticsInstance;
 +(void)clearInstance;
 
@@ -68,5 +74,10 @@ typedef NS_ENUM(NSInteger,UpdateWay) {
  */
 +(void)changeAmount:(NSInteger)amount;//default 10条 上报一次
 +(void)changeTime:(NSInteger)time;//default 30s 上报一次
+
+/**
+ 手动检查更新版本
+ */
++(BOOL)checkUpdateVersion;
 
 @end
