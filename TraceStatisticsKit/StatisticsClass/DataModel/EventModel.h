@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "iKYSerializationDefine.h"
 
 typedef NS_ENUM(NSInteger,EventType) {
     EventTypePV,
     EventTypeMV,
+    EventTypeCrash,
     EventTypeTag,
 };
 
 @interface EventModel : NSObject
 @property(nonatomic,copy)NSString *eventID;
 @property(nonatomic,copy)NSString *eventDesc;
+@property(nonatomic,assign)EventType etype;
 @end

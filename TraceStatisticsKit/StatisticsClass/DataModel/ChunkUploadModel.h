@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger,EventType) {
-    EventTypeDefault = 0
-};
+@class EventModel;
 
 typedef NS_ENUM(NSInteger,RequestStatus) {
     RequestStatusWaiting = 0,
@@ -22,7 +20,6 @@ typedef NS_ENUM(NSInteger,RequestStatus) {
 @interface ChunkUploadModel : NSObject
 @property(nonatomic,assign)RequestStatus status;
 @property(nonatomic,copy)NSString *requestApi;
-@property(nonatomic,assign)EventType eventType;
  @property(nonatomic,copy)NSString *identifier;
-@property(nonatomic,strong)NSArray *dataArray;
+@property(nonatomic,strong)NSArray <EventModel *>*dataArray;
 @end

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "WebTestViewController.h"
+#import "CustomClassHook.h"
 @interface ViewController ()
 
 @end
@@ -37,15 +38,27 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
     [tap addTarget:self action:@selector(clickTapGesture:)];
     [self.view addGestureRecognizer:tap];
+    
+    [[[CustomClassHook alloc] init] analyseUserdefinedTarget:NSStringFromClass([self class]) action:@selector(testFunc:) method:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self testFunc:@"测试开始"];
+    });
 }
 
 -(void)clickTapGesture:(UIGestureRecognizer *)gesture{
     NSLog(@"tap gesture");
+//    NSMutableArray *array = @[].mutableCopy;
+//    [array removeObjectAtIndex:2];
 }
 
 - (void)clickTest:(id)sender {
     WebTestViewController *webpage = [[WebTestViewController alloc] init];
     [self.navigationController pushViewController:webpage animated:YES];
+}
+
+-(void)testFunc:(NSString *)name{
+    NSLog(@"--%@",name);
 }
 
 

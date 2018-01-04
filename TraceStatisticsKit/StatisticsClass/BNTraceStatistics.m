@@ -8,6 +8,9 @@
 
 #import "BNTraceStatistics.h"
 #import <UIKit/UIKit.h>
+#import "UncaughtExceptionHandler.h"
+#import "CrashLog.h"
+#import "StatisticsCacheManager.h"
 
 static NSUInteger const KAMOUNT = 30;
 static NSUInteger const KTIME = 10;
@@ -42,6 +45,7 @@ static BNTraceStatistics *instance = nil;
     NSString *url = self.congigurePlistDic[@"Server"];
     NSAssert(url.length > 0, @"plist 文件 缺少配置服务URL");
     self.serverUrl = url;
+    InstallUncaughtExceptionHandler();
 }
 
 +(void)initWithAppKey:(NSString *)appKey statisticsWay:(UpdateWay)way{
@@ -69,6 +73,10 @@ static BNTraceStatistics *instance = nil;
                     selector:@selector(didFinishLaunchingNotification:)
                         name:UIApplicationDidFinishLaunchingNotification
                       object:nil];
+    [notifCenter addObserver:self
+                    selector:@selector(collectCrashLog:)
+                        name:CrashLogNotifify
+                      object:nil];
     
 }
 
@@ -76,9 +84,23 @@ static BNTraceStatistics *instance = nil;
     if (self.isLogEnabled) {
         NSLog(@"APP 启动了");
     }
+    //程序一次冷启动 可以把 程序的崩溃日志上传至服务器
+    
     
 }
 
+
+-(void)collectCrashLog:(NSNotification *)notification{
+    NSString *logInfo = (NSString *)notification.object;
+    if (!logInfo.length) {
+        return;
+    }
+    CrashLog *cralog = [CrashLog new];
+    cralog.stackTrace = logInfo;
+    cralog.etype = EventTypeCrash;
+    [[StatisticsCacheManager cacheManager] saveEventData:cralog];
+    
+}
 
 -(void)resignActive:(NSNotification *)notification{
     if (self.isLogEnabled) {

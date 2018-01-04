@@ -7,6 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "DeviceInfo.h"
+#import "UncaughtExceptionHandler.h"
 
 @interface TraceStatisticsKitTests : XCTestCase
 
@@ -25,8 +27,11 @@
 }
 
 - (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+}
+
+- (void)testDeviceInfo{
+//    [[NSNotificationCenter defaultCenter] postNotificationName:CrashLogNotifify object:@"test1234"];
 }
 
 - (void)testPerformanceExample {

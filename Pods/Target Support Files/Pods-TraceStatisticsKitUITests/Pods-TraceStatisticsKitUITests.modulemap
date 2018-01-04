@@ -1,0 +1,6 @@
+framework module Pods_TraceStatisticsKitUITests {
+  umbrella header "Pods-TraceStatisticsKitUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

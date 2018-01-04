@@ -7,7 +7,6 @@
 //
 
 #import "EventModel.h"
-#import "iKYSerializationDefine.h"
 #import <objc/runtime.h>
 
 @implementation EventModel

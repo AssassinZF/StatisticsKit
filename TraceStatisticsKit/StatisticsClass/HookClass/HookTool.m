@@ -12,12 +12,11 @@
 static void hook_exchangeMethod(Class originalClass, SEL originalSel, Class replacedClass, SEL replacedSel){
     // 原方法
     Method originalMethod = class_getInstanceMethod(originalClass, originalSel);
-    //    assert(originalMethod);
     // 替换方法
     Method replacedMethod = class_getInstanceMethod(replacedClass, replacedSel);
-    //    assert(originalMethod);
+    
     IMP replacedMethodIMP = method_getImplementation(replacedMethod);
-    // 向实现delegate的类中添加新的方法
+    
     BOOL didAddMethod = class_addMethod(originalClass, replacedSel, replacedMethodIMP, "v@:@@");
     if (didAddMethod) { // 添加成功
         NSLog(@"class_addMethod_success --> (%@)", NSStringFromSelector(replacedSel));

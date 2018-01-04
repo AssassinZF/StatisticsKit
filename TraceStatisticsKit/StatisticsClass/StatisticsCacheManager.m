@@ -10,11 +10,18 @@
 #import "BNTraceStatistics.h"
 #import "ChunkUploadModel.h"
 #import "StatisticsDataUpload.h"
+#import "EventModel.h"
+
+//所有用户收集的日志文件存放目录
+static NSString * const KLogCacheDir = @"LogCacheDir";
 
 //存放所有搜集到的事件的文件名
 static NSString * const KAllCollectEventFile = @"AllCollectEventFile";
 //从存放所有事件文件中 按照规则读取文件打包 等待上传 的文件名
 static NSString * const KPackEventWaitUpdateFile = @"PackEventWaitUpdateFile";
+//Crash log file
+static NSString * const KCrashLogFile = @"CrashLogFile";
+
 
 @interface StatisticsCacheManager()
 @property(nonatomic,strong,readwrite)NSMutableArray *eventArray;
@@ -35,14 +42,6 @@ static StatisticsCacheManager *instance = nil;
     return instance;
 }
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
 
 -(void)startTimer{
     BNTraceStatistics *statistic = [BNTraceStatistics statisticsInstance];
@@ -70,10 +69,27 @@ static StatisticsCacheManager *instance = nil;
 }
 
 
--(void)saveEventData:(EventInfo *)eventInfo{
-    [self.eventArray addObject:eventInfo];//缓存到内存中
-    [self archiveData:self.eventArray fileName:KAllCollectEventFile];//缓存到磁盘
-    [self startUploadStatisticData];//检查是否可以上传
+-(void)saveEventData:(EventModel *)eventInfo{
+    if (!eventInfo) {
+        return;
+    }
+    switch (eventInfo.etype) {
+        case EventTypePV:
+        case EventTypeMV:
+        {
+            [self.eventArray addObject:eventInfo];//缓存到内存中
+            [self archiveData:self.eventArray fileName:KAllCollectEventFile];//缓存到磁盘
+            [self startUploadStatisticData];//检查是否可以上传
+            
+        }break;
+        case EventTypeCrash:
+        {
+            [self archiveCrashLog:eventInfo];
+        }break;
+
+        default:
+            break;
+    }
 }
 
 -(void)startUploadStatisticData{
@@ -103,7 +119,21 @@ static StatisticsCacheManager *instance = nil;
     }
 }
 
-
+-(void)archiveCrashLog:(EventModel *)crashData{
+    
+    NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:KCrashLogFile]];
+    NSMutableArray *dataArray;
+    if (data) {
+        dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }else{
+        dataArray = @[].mutableCopy;
+    }
+    [dataArray addObject:crashData];
+    BOOL suc = [self archiveData:dataArray fileName:KCrashLogFile];
+    if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
+        NSLog(@"保存奔溃日志结果：%@",suc?@"YES":@"NO");
+    }
+}
 
 -(BOOL)archiveData:(id)data fileName:(NSString *)fileName{
     NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:data];
@@ -183,7 +213,7 @@ static StatisticsCacheManager *instance = nil;
         return nil;
     }
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *directory = [[paths objectAtIndex:0] stringByAppendingPathComponent:fileName];
+    NSString *directory = [[paths objectAtIndex:0] stringByAppendingPathComponent:KLogCacheDir];
     NSFileManager *fm = [NSFileManager defaultManager];
     if (![fm fileExistsAtPath:directory]) {
         [fm createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:nil];
