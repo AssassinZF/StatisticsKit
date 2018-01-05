@@ -52,11 +52,11 @@ typedef void (^RTFailureBlock)(NSError *error);
     request.HTTPMethod = @"POST";
     
     //将需要的信息放入请求头 随便定义了几个
-    [request setValue:@"xxx" forHTTPHeaderField:@"Authorization"];//token
-    [request setValue:@"xxx" forHTTPHeaderField:@"Gis-Lng"];//坐标 lng
-    [request setValue:@"xxx" forHTTPHeaderField:@"Gis-Lat"];//坐标 lat
-    [request setValue:@"xxx" forHTTPHeaderField:@"Version"];//版本
-    NSLog(@"POST-Header:%@",request.allHTTPHeaderFields);
+//    [request setValue:@"xxx" forHTTPHeaderField:@"Authorization"];//token
+//    [request setValue:@"xxx" forHTTPHeaderField:@"Gis-Lng"];//坐标 lng
+//    [request setValue:@"xxx" forHTTPHeaderField:@"Gis-Lat"];//坐标 lat
+//    [request setValue:@"xxx" forHTTPHeaderField:@"Version"];//版本
+//    NSLog(@"POST-Header:%@",request.allHTTPHeaderFields);
     
     //把参数放到请求体内
     //    NSString *postStr = [XMNetWorkHelper parseParams:parameters];
@@ -81,7 +81,7 @@ static dispatch_queue_t upload_manager_creation_queue() {
     static dispatch_queue_t upload_manager_creation_queue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        upload_manager_creation_queue = dispatch_queue_create("com.statistic.upload.manager.creation", DISPATCH_QUEUE_CONCURRENT);
+        upload_manager_creation_queue = dispatch_queue_create("com.statistic.upload.manager.creation", DISPATCH_QUEUE_SERIAL);
     });
     return upload_manager_creation_queue;
 }

@@ -13,14 +13,14 @@
 #import "EventModel.h"
 
 //所有用户收集的日志文件存放目录
-static NSString * const KLogCacheDir = @"LogCacheDir";
+NSString * const KLogCacheDir = @"LogCacheDir";
 
 //存放所有搜集到的事件的文件名
-static NSString * const KAllCollectEventFile = @"AllCollectEventFile";
+NSString * const KAllCollectEventFile = @"AllCollectEventFile";
 //从存放所有事件文件中 按照规则读取文件打包 等待上传 的文件名
-static NSString * const KPackEventWaitUpdateFile = @"PackEventWaitUpdateFile";
+NSString * const KPackEventWaitUpdateFile = @"PackEventWaitUpdateFile";
 //Crash log file
-static NSString * const KCrashLogFile = @"CrashLogFile";
+NSString * const KCrashLogFile = @"CrashLogFile";
 
 
 @interface StatisticsCacheManager()
@@ -42,6 +42,40 @@ static StatisticsCacheManager *instance = nil;
     return instance;
 }
 
+#pragma mark - Public mehtod
+-(void)saveEventData:(EventModel *)eventInfo{
+    if (!eventInfo) {
+        return;
+    }
+    switch (eventInfo.etype) {
+        case EventTypePV:
+        case EventTypeMV:
+        {
+            [self.eventArray addObject:eventInfo];//缓存到内存中
+            [self archiveData:self.eventArray fileName:KAllCollectEventFile];//缓存到磁盘
+            [self startUploadStatisticData];//检查是否可以上传
+            
+        }break;
+        case EventTypeCrash:
+        {
+            [self archiveCrashLog:eventInfo];
+        }break;
+
+        default:
+            break;
+    }
+}
+
+-(NSArray <EventModel *>*)getAllCrashLogData{
+    NSArray *crashData = [self unArchiveDataWithFileName:KCrashLogFile];
+    return crashData;
+}
+
+-(BOOL)removeAllCrashLogData{
+    return [self clearFile:KCrashLogFile];
+}
+
+#pragma mark -  Private method
 
 -(void)startTimer{
     BNTraceStatistics *statistic = [BNTraceStatistics statisticsInstance];
@@ -68,30 +102,6 @@ static StatisticsCacheManager *instance = nil;
     
 }
 
-
--(void)saveEventData:(EventModel *)eventInfo{
-    if (!eventInfo) {
-        return;
-    }
-    switch (eventInfo.etype) {
-        case EventTypePV:
-        case EventTypeMV:
-        {
-            [self.eventArray addObject:eventInfo];//缓存到内存中
-            [self archiveData:self.eventArray fileName:KAllCollectEventFile];//缓存到磁盘
-            [self startUploadStatisticData];//检查是否可以上传
-            
-        }break;
-        case EventTypeCrash:
-        {
-            [self archiveCrashLog:eventInfo];
-        }break;
-
-        default:
-            break;
-    }
-}
-
 -(void)startUploadStatisticData{
     if ([BNTraceStatistics statisticsInstance].updateWay == UpdateWayAmount && ![self checkStartPackUpload]){
         return;//暂未达到上传要求 等待中
@@ -105,6 +115,7 @@ static StatisticsCacheManager *instance = nil;
     }
 }
 
+//打包所有的事件收集到的缓存文件，转移到待上传缓存文件，并且删除之前的文件
 -(void)packChunkData{
     NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:KAllCollectEventFile]];
     NSMutableArray *dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -119,15 +130,9 @@ static StatisticsCacheManager *instance = nil;
     }
 }
 
+//保存崩溃日志
 -(void)archiveCrashLog:(EventModel *)crashData{
-    
-    NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:KCrashLogFile]];
-    NSMutableArray *dataArray;
-    if (data) {
-        dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    }else{
-        dataArray = @[].mutableCopy;
-    }
+    NSMutableArray *dataArray = [self unArchiveDataWithFileName:KCrashLogFile].mutableCopy;
     [dataArray addObject:crashData];
     BOOL suc = [self archiveData:dataArray fileName:KCrashLogFile];
     if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
@@ -135,16 +140,7 @@ static StatisticsCacheManager *instance = nil;
     }
 }
 
--(BOOL)archiveData:(id)data fileName:(NSString *)fileName{
-    NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:data];
-    BOOL isSuc = [NSKeyedArchiver archiveRootObject:newData toFile:[[self class] filePath:fileName]];
-    if (!isSuc && [BNTraceStatistics statisticsInstance].isLogEnabled) {
-        NSLog(@"归档失败");
-        return NO;
-    }
-    return YES;
-}
-
+//上传数据成功，移除对应的旧缓存数据
 -(void)removeWaitUplaodData:(ChunkUploadModel *)uploadData{
     if (uploadData)return;
     if ([self.waitUpdateData containsObject:uploadData]) {
@@ -156,6 +152,7 @@ static StatisticsCacheManager *instance = nil;
     }
 }
 
+//检查是否达到上报条件
 -(BOOL)checkStartPackUpload{
     BNTraceStatistics *statistic = [BNTraceStatistics statisticsInstance];
     if (statistic.updateWay == UpdateWayAmount) {
@@ -169,7 +166,7 @@ static StatisticsCacheManager *instance = nil;
 -(NSMutableArray *)eventArray{
     if (!_eventArray) {
         _eventArray = @[].mutableCopy;
-        NSMutableArray *cacheData = [self getCacheData:KAllCollectEventFile];
+        NSMutableArray *cacheData = [self unArchiveDataWithFileName:KAllCollectEventFile].mutableCopy;
         if (cacheData && cacheData.count) {
             [_eventArray addObjectsFromArray:cacheData];
         }
@@ -180,7 +177,7 @@ static StatisticsCacheManager *instance = nil;
 -(NSMutableArray <ChunkUploadModel *>*)waitUpdateData{
     if (!_waitUpdateData) {
         _waitUpdateData = @[].mutableCopy;
-        NSMutableArray *cacheData = [self getCacheData:KPackEventWaitUpdateFile];
+        NSMutableArray *cacheData = [self unArchiveDataWithFileName:KPackEventWaitUpdateFile].mutableCopy;
         if (cacheData && cacheData.count) {
             [_waitUpdateData addObjectsFromArray:cacheData];
         }
@@ -190,24 +187,44 @@ static StatisticsCacheManager *instance = nil;
 
 #pragma mark - Archive
 
--(void)clearFile:(NSString *)fileName{
-    NSFileManager *fileM = [NSFileManager defaultManager];
-    if ([fileM fileExistsAtPath:fileName]) {
-        [fileM removeItemAtPath:fileName error:nil];
-        if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
-            NSLog(@"统计系统 移除文件 -- %@",fileName);
-        }
+-(BOOL)archiveData:(id)data fileName:(NSString *)fileName{
+    NSData *newData = [NSKeyedArchiver archivedDataWithRootObject:data];
+    if (newData == nil)return NO;
+    BOOL isSuc = [NSKeyedArchiver archiveRootObject:newData toFile:[[self class] filePath:fileName]];
+    if (!isSuc && [BNTraceStatistics statisticsInstance].isLogEnabled) {
+        NSLog(@"归档失败");
+        return NO;
     }
+    return YES;
 }
 
--(NSMutableArray *)getCacheData:(NSString *)cacheFileName{
-    NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:cacheFileName]];
-    NSMutableArray *dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+-(NSArray *)unArchiveDataWithFileName:(NSString *)fileName{
+    NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:fileName]];
+    NSArray *dataArray;
+    if (data) {
+        dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }else dataArray = @[];
     return dataArray;
 }
 
+
 #pragma mark - File handle
 
+//清除文件
+-(BOOL)clearFile:(NSString *)fileName{
+    if (fileName.length < 1) return NO;
+    NSFileManager *fileM = [NSFileManager defaultManager];
+    if ([fileM fileExistsAtPath:fileName]) {
+        BOOL suc = [fileM removeItemAtPath:fileName error:nil];
+        if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
+            NSLog(@"统计系统 移除文件 -- %@",fileName);
+        }
+        return suc;
+    }
+    return YES;
+}
+
+//获取文件路径
 +(NSString *)filePath:(NSString *)fileName{
     if (!fileName.length) {
         return nil;
@@ -221,6 +238,7 @@ static StatisticsCacheManager *instance = nil;
     return [directory stringByAppendingPathComponent:fileName];
 }
 
+//随机时间错
 -(NSString *)randomStringId{
     NSTimeInterval date = [[NSDate date] timeIntervalSince1970];
     NSString *dateString = [NSString stringWithFormat:@"%0.f",date * 1000];

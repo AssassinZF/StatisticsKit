@@ -24,6 +24,16 @@
 
 
 /**
+ 获取所有崩溃日志数据
+
+ @return data
+ */
+-(NSArray <EventModel *>*)getAllCrashLogData;
+
+-(BOOL)removeAllCrashLogData;
+
+
+/**
  删除上传成功的事件数据包
 
  @param uploadData 打包上传的文件包

@@ -32,8 +32,8 @@
 }
 
 - (void)swiz_addTarget:(id)target action:(SEL)action{
-    [HookTool swizzlingInClass:[target class] targetClass:[self class] originalSelector:action swizzledSelector:@selector(replace_GestureRecognizerEvent:)];
     [self swiz_addTarget:target action:action];
+    [HookTool swizzlingInClass:[target class] targetClass:[self class] originalSelector:action swizzledSelector:@selector(replace_GestureRecognizerEvent:)];
 }
 
 -(void)replace_GestureRecognizerEvent:(UIGestureRecognizer *)gesture{

@@ -10,7 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "UncaughtExceptionHandler.h"
 #import "CrashLog.h"
+#import "ChunkUploadModel.h"
 #import "StatisticsCacheManager.h"
+#import "StatisticsDataUpload.h"
 
 static NSUInteger const KAMOUNT = 30;
 static NSUInteger const KTIME = 10;
@@ -85,8 +87,11 @@ static BNTraceStatistics *instance = nil;
         NSLog(@"APP 启动了");
     }
     //程序一次冷启动 可以把 程序的崩溃日志上传至服务器
-    
-    
+    //上传上次的崩溃日志
+//    NSArray *crashData = [[StatisticsCacheManager cacheManager] getAllCrashLogData];
+//    ChunkUploadModel *chunkDta = [[ChunkUploadModel alloc] init];
+//    chunkDta.dataArray = crashData;
+//    [[StatisticsDataUpload uploadManager] uploadWithData:chunkDta];
 }
 
 
@@ -150,6 +155,7 @@ static BNTraceStatistics *instance = nil;
         instance = nil;
     }
 }
+
 
 -(NSMutableDictionary *)congigurePlistDic{
     if (!_congigurePlistDic) {

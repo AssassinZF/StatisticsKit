@@ -811,6 +811,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CX9244259Y;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = TraceStatisticsKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -833,6 +834,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = CX9244259Y;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = TraceStatisticsKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

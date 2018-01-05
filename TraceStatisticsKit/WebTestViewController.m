@@ -35,6 +35,15 @@
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
     
 }
+
+-(void)testFun1:(NSString *)name{
+    NSLog(@"%@",name);
+}
+
+ -(void)testFun2:(NSString *)age{
+    NSLog(@"%@",age);
+}
+
 /*
 #pragma mark - Navigation
 

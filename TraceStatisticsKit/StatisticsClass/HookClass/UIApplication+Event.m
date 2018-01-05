@@ -23,10 +23,9 @@
 
 #pragma mark - Method Swizzling
 - (BOOL)swiz_sendAction:(SEL)action to:(nullable id)target from:(nullable id)sender forEvent:(nullable UIEvent *)event{
+    [self swiz_sendAction:action to:target from:sender forEvent:event];
     NSLog(@"action = %@,taget = %@,event = %ld",NSStringFromSelector(action),target,(long)event);
     [FilterEvent mvWithAction:action to:target from:sender forEvent:event];
-    [self swiz_sendAction:action to:target from:sender forEvent:event];
     return YES;
-
 }
 @end

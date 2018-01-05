@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface WebTestViewController : UIViewController
+-(void)testFun1:(NSString *)name;
+-(void)testFun2:(NSString *)age;
 
 @end

@@ -10,7 +10,9 @@
 #import "WebTestViewController.h"
 #import "CustomClassHook.h"
 @interface ViewController ()
-
+{
+    WebTestViewController *webpage;
+}
 @end
 
 @implementation ViewController
@@ -39,10 +41,18 @@
     [tap addTarget:self action:@selector(clickTapGesture:)];
     [self.view addGestureRecognizer:tap];
     
-    [[[CustomClassHook alloc] init] analyseUserdefinedTarget:NSStringFromClass([self class]) action:@selector(testFunc:) method:nil];
+    webpage = [[WebTestViewController alloc] init];
     
+    [[[CustomClassHook alloc] init] analyseUserdefinedTarget:NSStringFromClass([self class]) action:@selector(testFunc:agep:)];
+
+    [[[CustomClassHook alloc] init] analyseUserdefinedTarget:NSStringFromClass([webpage class]) action:@selector(testFun2:)];
+
+    [[[CustomClassHook alloc] init] analyseUserdefinedTarget:NSStringFromClass([webpage class]) action:@selector(testFun1:)];
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self testFunc:@"测试开始"];
+        [self testFunc:@"testFunc:agep" agep:100];
+        [webpage testFun2:@"testfun2"];
+        
     });
 }
 
@@ -53,12 +63,12 @@
 }
 
 - (void)clickTest:(id)sender {
-    WebTestViewController *webpage = [[WebTestViewController alloc] init];
+    
     [self.navigationController pushViewController:webpage animated:YES];
 }
 
--(void)testFunc:(NSString *)name{
-    NSLog(@"--%@",name);
+-(void)testFunc:(NSString *)name agep:(NSInteger)age{
+    NSLog(@"--%@ , -- %ld",name,age);
 }
 
 

@@ -28,16 +28,17 @@
 #pragma mark - Method Swizzling
 - (void)swiz_viewWillAppear:(BOOL)animated
 {
+    [self swiz_viewWillAppear:animated];
     NSString *classString = NSStringFromClass([self class]);
     [FilterEvent pvEnterWithClassName:classString];
-    [self swiz_viewWillAppear:animated];
 }
 
 - (void)swiz_viewWillDisappear:(BOOL)animated
 {
+    [self swiz_viewWillDisappear:animated];
     NSString *classString = NSStringFromClass([self class]);
     [FilterEvent pvLeaveWithClassName:classString];
-    [self swiz_viewWillDisappear:animated];
+    
 }
 
 

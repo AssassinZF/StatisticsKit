@@ -15,7 +15,7 @@
 /**
  文件上传方法 按照 参数格式传入需要上传的统计数据即可
 
- @param data Array<NSDictionary>
+ @param data 
  */
 -(void)uploadWithData:(ChunkUploadModel *)data;
 @end
