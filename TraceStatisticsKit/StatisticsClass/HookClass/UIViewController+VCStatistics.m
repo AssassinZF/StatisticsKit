@@ -23,6 +23,8 @@
         SEL originalSelector_disAppear = @selector(viewWillDisappear:);
         SEL swizzledSelector_disAppear = @selector(swiz_viewWillDisappear:);
         [HookTool swizzlingInClass:[self class] targetClass:[self class] originalSelector:originalSelector_disAppear swizzledSelector:swizzledSelector_disAppear];
+        
+        
     });
 }
 #pragma mark - Method Swizzling
