@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "http://EXAMPLE/BNStatisticsKit.git", :tag => "#{s.version}" }
+  s.source       = { :git => "http://10.60.80.49:8060/iOS-Team/TraceStatistics.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
