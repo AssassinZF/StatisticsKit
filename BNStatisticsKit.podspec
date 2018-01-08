@@ -109,7 +109,7 @@ Pod::Spec.new do |s|
   s.subspec 'Statistics' do |ss|
       ss.source_files = 'TraceStatisticsKit/StatisticsClass/*.{h,m}'
       ss.public_header_files = 'TraceStatisticsKit/StatisticsClass/*.h'
-      ss.dependency = 'MJExtension'
+      ss.dependency 'MJExtension'
   end
 
   # s.source_files  = "Classes", "Classes/**/*.{h,m}"
