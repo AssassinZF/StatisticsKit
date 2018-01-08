@@ -10,6 +10,7 @@
 #import "HookTool.h"
 #import <objc/runtime.h>
 #import <objc/message.h>
+#import "FilterEvent.h"
 
 @interface HookWebViewDelegateMonitor : NSObject
 + (void)exchangeUIWebViewDelegateMethod:(Class)aClass;
@@ -45,7 +46,6 @@
 // 交换后的具体方法实现
 - (BOOL)replace_webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSLog(@"replaced_webView-shouldStartLoadWithRequest");
     return [self replace_webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
 }
 

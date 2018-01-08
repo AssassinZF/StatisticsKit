@@ -9,7 +9,7 @@
 #import "FilterEvent.h"
 #import "BNTraceStatistics.h"
 #import "StatisticsCacheManager.h"
-#import "EventModel.h"
+#import "PageShowTrace.h"
 
 @implementation FilterEvent
 
@@ -17,24 +17,42 @@
     return [BNTraceStatistics statisticsInstance].congigurePlistDic;
 }
 
-+(void)pvEnterWithClassName:(nullable NSString *)className{
-    EventModel *eventModel = [EventModel new];
-    eventModel.eventDesc = className;
-    [[StatisticsCacheManager cacheManager] saveEventData:eventModel];
-
-    if ([[self congigurePlist].allKeys containsObject:className]) {
-        
-    }
++(void)pvEnterWithClassName:(NSString *)className target:(UIViewController *)targer{
     
+    NSDictionary *configure = [self congigurePlist];
+    if(![configure.allKeys containsObject:className]){
+        return;
+    }
+    PageShowTrace *page = [PageShowTrace new];
+    page.eventID = [self congigurePlist][className][@"viewDidAppear"][@"ID"];
+    page.pageClassName = className;
+    page.pageTitle = targer.title;
+    page.time = [self currentTimeString];
+    [[StatisticsCacheManager cacheManager] saveEventData:page];
+
 }
 
-+(void)pvLeaveWithClassName:(nullable NSString *)className{
-    EventModel *eventModel = [EventModel new];
-    eventModel.eventDesc = className;
-    [[StatisticsCacheManager cacheManager] saveEventData:eventModel];
++(void)pvLeaveWithClassName:(NSString *)className target:(UIViewController *)targer;{
+    NSDictionary *configure = [self congigurePlist];
+    if(![configure.allKeys containsObject:className]){
+        return;
+    }
+    PageShowTrace *page = [PageShowTrace new];
+    page.eventID = [self congigurePlist][className][@"viewDidDisAppear"][@"ID"];
+    page.pageClassName = className;
+    page.pageTitle = targer.title;
+    page.time = [self currentTimeString];
+    [[StatisticsCacheManager cacheManager] saveEventData:page];
 }
 
 +(void)mvWithAction:(nullable SEL)action to:(nullable id)target from:(nullable id)sender forEvent:(nullable UIEvent *)event{
     
+}
+
++(NSString *)currentTimeString{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy年MM月dd日 HH时mm分ss秒 Z";
+    return [formatter stringFromDate:[NSDate date]];
+
 }
 @end

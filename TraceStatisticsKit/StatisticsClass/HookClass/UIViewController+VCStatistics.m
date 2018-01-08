@@ -32,14 +32,14 @@
 {
     [self swiz_viewWillAppear:animated];
     NSString *classString = NSStringFromClass([self class]);
-    [FilterEvent pvEnterWithClassName:classString];
+    [FilterEvent pvEnterWithClassName:classString target:self];
 }
 
 - (void)swiz_viewWillDisappear:(BOOL)animated
 {
     [self swiz_viewWillDisappear:animated];
     NSString *classString = NSStringFromClass([self class]);
-    [FilterEvent pvLeaveWithClassName:classString];
+    [FilterEvent pvLeaveWithClassName:classString target:self];
     
 }
 

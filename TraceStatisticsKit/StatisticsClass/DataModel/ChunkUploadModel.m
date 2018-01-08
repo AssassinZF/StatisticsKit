@@ -7,9 +7,9 @@
 //
 
 #import "ChunkUploadModel.h"
-#import "iKYSerializationDefine.h"
 #import <objc/message.h>
+#import <MJExtension/MJExtension.h>
 
 @implementation ChunkUploadModel
-iKY_AUTO_SERIALIZATION
+MJCodingImplementation
 @end

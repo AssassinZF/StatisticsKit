@@ -8,7 +8,7 @@
 
 #import "UIGestureRecognizer+GestureHook.h"
 #import "HookTool.h"
-
+#import "FilterEvent.h"
 
 @implementation UIGestureRecognizer (GestureHook)
 
@@ -33,14 +33,6 @@
 
 - (void)swiz_addTarget:(id)target action:(SEL)action{
     [self swiz_addTarget:target action:action];
-    [HookTool swizzlingInClass:[target class] targetClass:[self class] originalSelector:action swizzledSelector:@selector(replace_GestureRecognizerEvent:)];
 }
-
--(void)replace_GestureRecognizerEvent:(UIGestureRecognizer *)gesture{
-    [self replace_GestureRecognizerEvent:gesture];
-    NSLog(@"replace_gesture");
-}
-
-
 
 @end

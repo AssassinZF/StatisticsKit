@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "iKYSerializationDefine.h"
+#import <MJExtension/MJExtension.h>
 
 typedef NS_ENUM(NSInteger,EventType) {
     EventTypePV,

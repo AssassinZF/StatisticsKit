@@ -16,7 +16,7 @@
 
 static NSUInteger const KAMOUNT = 30;
 static NSUInteger const KTIME = 10;
-static NSString *const plistPathName = @"ConfigureStatistics";
+static NSString *const plistPathName = @"StatisticsConfigure";
 
 @interface BNTraceStatistics()
 @property(nonatomic,assign,readwrite)UpdateWay updateWay;
@@ -44,9 +44,9 @@ static BNTraceStatistics *instance = nil;
     self.time = KTIME;
     self.isLogEnabled = YES;
     [self addNotificationCenter];
-    NSString *url = self.congigurePlistDic[@"Server"];
-    NSAssert(url.length > 0, @"plist 文件 缺少配置服务URL");
-    self.serverUrl = url;
+    
+    NSInteger count = self.congigurePlistDic.count;
+    NSAssert(count > 0, @"缺少配置服务URL" );
     InstallUncaughtExceptionHandler();
 }
 
@@ -159,8 +159,10 @@ static BNTraceStatistics *instance = nil;
 
 -(NSMutableDictionary *)congigurePlistDic{
     if (!_congigurePlistDic) {
-        NSString *plistName = [[NSBundle mainBundle] pathForResource:plistPathName ofType:@"plist"];
-        _congigurePlistDic = [NSMutableDictionary dictionaryWithContentsOfFile:plistName];
+        NSString *plistName = [[NSBundle mainBundle] pathForResource:plistPathName ofType:@"json"];
+        NSData *jsonData = [NSData dataWithContentsOfFile:plistName];
+        NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
+        _congigurePlistDic = jsonDic.mutableCopy;
     }
     return _congigurePlistDic;
 }

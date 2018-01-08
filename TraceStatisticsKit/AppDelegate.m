@@ -25,6 +25,7 @@
     
     
     [BNTraceStatistics initWithAppKey:@"123" statisticsWay:UpdateWayAmount];
+    [BNTraceStatistics changeAmount:1];
     
     
     

@@ -108,7 +108,7 @@ static StatisticsCacheManager *instance = nil;
     }
     [self packChunkData];//打包需要上传的数据
     for (ChunkUploadModel *model in self.waitUpdateData) {
-        if (model.status != RequestStatusUploading && model.status == RequestStatusSuccess) {
+        if (model.status != RequestStatusUploading || model.status != RequestStatusSuccess) {
             //发现有上传失败的时候 继续提交上传
             [[StatisticsDataUpload uploadManager] uploadWithData:model];
         }
@@ -120,6 +120,7 @@ static StatisticsCacheManager *instance = nil;
     NSData * data = [NSKeyedUnarchiver unarchiveObjectWithFile:[[self class] filePath:KAllCollectEventFile]];
     NSMutableArray *dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     ChunkUploadModel *uploadModel = [[ChunkUploadModel alloc] init];
+    uploadModel.status = RequestStatusWaiting;
     uploadModel.dataArray = dataArray;
     uploadModel.identifier = [self randomStringId];
     [self.waitUpdateData addObject:uploadModel];
@@ -127,6 +128,7 @@ static StatisticsCacheManager *instance = nil;
     BOOL flag = [self archiveData:self.waitUpdateData fileName:KPackEventWaitUpdateFile];
     if (flag) {
         [self clearFile:KAllCollectEventFile];//确保数据打包等待上传并且缓存成功 清理该文件
+        [self.eventArray removeAllObjects];
     }
 }
 
@@ -142,13 +144,17 @@ static StatisticsCacheManager *instance = nil;
 
 //上传数据成功，移除对应的旧缓存数据
 -(void)removeWaitUplaodData:(ChunkUploadModel *)uploadData{
-    if (uploadData)return;
+    if (!uploadData)return;
     if ([self.waitUpdateData containsObject:uploadData]) {
         [self.waitUpdateData removeObject:uploadData];
     }
-    BOOL flag = [self archiveData:self.waitUpdateData fileName:KPackEventWaitUpdateFile];
-    if ([BNTraceStatistics statisticsInstance].isLogEnabled && flag) {
-        NSLog(@"\n 一次数据上报成功，并且成功删除 磁盘缓存已更新");
+    if(self.waitUpdateData.count){
+        BOOL flag = [self archiveData:self.waitUpdateData fileName:KPackEventWaitUpdateFile];
+        if ([BNTraceStatistics statisticsInstance].isLogEnabled && flag) {
+            NSLog(@"\n 一次数据上报成功，并且成功删除 磁盘缓存已更新");
+        }
+    }else{
+        [self clearFile:KPackEventWaitUpdateFile];
     }
 }
 
@@ -214,8 +220,9 @@ static StatisticsCacheManager *instance = nil;
 -(BOOL)clearFile:(NSString *)fileName{
     if (fileName.length < 1) return NO;
     NSFileManager *fileM = [NSFileManager defaultManager];
-    if ([fileM fileExistsAtPath:fileName]) {
-        BOOL suc = [fileM removeItemAtPath:fileName error:nil];
+    NSString *fullPath = [[self class] filePath:fileName];
+    if ([fileM fileExistsAtPath:fullPath]) {
+        BOOL suc = [fileM removeItemAtPath:fullPath error:nil];
         if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
             NSLog(@"统计系统 移除文件 -- %@",fileName);
         }

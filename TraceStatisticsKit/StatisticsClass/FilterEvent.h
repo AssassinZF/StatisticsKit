@@ -11,8 +11,10 @@
 
 @interface FilterEvent : NSObject
 
-+(void)pvEnterWithClassName:(nullable NSString *)className;
-+(void)pvLeaveWithClassName:(nullable NSString *)className;
++(void)pvEnterWithClassName:(nullable NSString *)className target:(UIViewController *)targer;
++(void)pvLeaveWithClassName:(nullable NSString *)className target:(UIViewController *)targer;
 
 +(void)mvWithAction:(nullable SEL)action to:(nullable id)target from:(nullable id)sender forEvent:(nullable UIEvent *)event;
+
+
 @end

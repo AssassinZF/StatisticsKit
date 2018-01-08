@@ -7,6 +7,7 @@ target 'TraceStatisticsKit' do
 
   # Pods for TraceStatisticsKit
 pod 'UICKeyChainStore'
+pod 'MJExtension'
   target 'TraceStatisticsKitTests' do
     inherit! :search_paths
     # Pods for testing

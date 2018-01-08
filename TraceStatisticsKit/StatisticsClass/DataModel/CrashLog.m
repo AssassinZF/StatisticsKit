@@ -8,8 +8,7 @@
 
 #import "CrashLog.h"
 #import <objc/runtime.h>
-#import "iKYSerializationDefine.h"
 
 @implementation CrashLog
-iKY_AUTO_SERIALIZATION
+MJCodingImplementation
 @end

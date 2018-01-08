@@ -10,5 +10,5 @@
 #import <objc/runtime.h>
 
 @implementation EventModel
-iKY_AUTO_SERIALIZATION
+MJCodingImplementation
 @end

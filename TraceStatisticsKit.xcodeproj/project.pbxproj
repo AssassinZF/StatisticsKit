@@ -18,7 +18,6 @@
 		011060A01FF3789C00649178 /* BNTraceStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 0110609F1FF3789C00649178 /* BNTraceStatistics.m */; };
 		011060A51FF3840F00649178 /* AppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060A41FF3840F00649178 /* AppInfo.m */; };
 		011060AE1FF39BEC00649178 /* EventInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060AD1FF39BEC00649178 /* EventInfo.m */; };
-		011060B01FF47CEA00649178 /* ConfigureStatistics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 011060AF1FF47CEA00649178 /* ConfigureStatistics.plist */; };
 		011060B31FF47D5800649178 /* StatisticsCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B21FF47D5800649178 /* StatisticsCacheManager.m */; };
 		011060B61FF4C48700649178 /* StatisticsDataUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B51FF4C48700649178 /* StatisticsDataUpload.m */; };
 		011060B91FF6248900649178 /* ChunkUploadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 011060B81FF6248900649178 /* ChunkUploadModel.m */; };
@@ -38,6 +37,7 @@
 		011230081FFDCC750043796C /* CrashLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 011230071FFDCC750043796C /* CrashLog.m */; };
 		0112300A1FFE07530043796C /* StatisticsConfigure.json in Resources */ = {isa = PBXBuildFile; fileRef = 011230091FFE07530043796C /* StatisticsConfigure.json */; };
 		0112300D1FFE11600043796C /* CustomClassHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 0112300C1FFE11600043796C /* CustomClassHook.m */; };
+		0146212E2003498E00F5F84F /* PageShowTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0146212D2003498E00F5F84F /* PageShowTrace.m */; };
 		5B7AF5A8F40889C3817387FE /* Pods_TraceStatisticsKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 443A5827CB64F3268A00CC57 /* Pods_TraceStatisticsKitTests.framework */; };
 		6575C502F77A7E0153688182 /* Pods_TraceStatisticsKitUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE14800B17D67BE74CA366C7 /* Pods_TraceStatisticsKitUITests.framework */; };
 		6762990E7393F73198E210D0 /* Pods_TraceStatisticsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1780AF2C267A013D95356979 /* Pods_TraceStatisticsKit.framework */; };
@@ -79,12 +79,10 @@
 		011060801FF3375900649178 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0110609E1FF3789C00649178 /* BNTraceStatistics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BNTraceStatistics.h; sourceTree = "<group>"; };
 		0110609F1FF3789C00649178 /* BNTraceStatistics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BNTraceStatistics.m; sourceTree = "<group>"; };
-		011060A11FF3839B00649178 /* iKYSerializationDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iKYSerializationDefine.h; sourceTree = "<group>"; };
 		011060A31FF3840F00649178 /* AppInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
 		011060A41FF3840F00649178 /* AppInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppInfo.m; sourceTree = "<group>"; };
 		011060AC1FF39BEC00649178 /* EventInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventInfo.h; sourceTree = "<group>"; };
 		011060AD1FF39BEC00649178 /* EventInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventInfo.m; sourceTree = "<group>"; };
-		011060AF1FF47CEA00649178 /* ConfigureStatistics.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ConfigureStatistics.plist; sourceTree = "<group>"; };
 		011060B11FF47D5800649178 /* StatisticsCacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatisticsCacheManager.h; sourceTree = "<group>"; };
 		011060B21FF47D5800649178 /* StatisticsCacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatisticsCacheManager.m; sourceTree = "<group>"; };
 		011060B41FF4C48700649178 /* StatisticsDataUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatisticsDataUpload.h; sourceTree = "<group>"; };
@@ -121,6 +119,8 @@
 		011230091FFE07530043796C /* StatisticsConfigure.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StatisticsConfigure.json; sourceTree = "<group>"; };
 		0112300B1FFE11600043796C /* CustomClassHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomClassHook.h; sourceTree = "<group>"; };
 		0112300C1FFE11600043796C /* CustomClassHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomClassHook.m; sourceTree = "<group>"; };
+		0146212C2003498E00F5F84F /* PageShowTrace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageShowTrace.h; sourceTree = "<group>"; };
+		0146212D2003498E00F5F84F /* PageShowTrace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageShowTrace.m; sourceTree = "<group>"; };
 		1780AF2C267A013D95356979 /* Pods_TraceStatisticsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TraceStatisticsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F8651B558FDFC0F4E5D1856 /* Pods-TraceStatisticsKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TraceStatisticsKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TraceStatisticsKit/Pods-TraceStatisticsKit.release.xcconfig"; sourceTree = "<group>"; };
 		3A0933FEAC3C8BBED07A11B3 /* Pods-TraceStatisticsKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TraceStatisticsKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TraceStatisticsKitTests/Pods-TraceStatisticsKitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -227,7 +227,6 @@
 				01122FFC1FFDB47C0043796C /* Utils */,
 				01122FCD1FFC7C910043796C /* HookClass */,
 				011060A21FF383BA00649178 /* DataModel */,
-				011060A11FF3839B00649178 /* iKYSerializationDefine.h */,
 				01122FC51FFC72DC0043796C /* FilterEvent.h */,
 				01122FC61FFC72DC0043796C /* FilterEvent.m */,
 				0110609E1FF3789C00649178 /* BNTraceStatistics.h */,
@@ -236,7 +235,6 @@
 				011060B21FF47D5800649178 /* StatisticsCacheManager.m */,
 				011060B41FF4C48700649178 /* StatisticsDataUpload.h */,
 				011060B51FF4C48700649178 /* StatisticsDataUpload.m */,
-				011060AF1FF47CEA00649178 /* ConfigureStatistics.plist */,
 				011230091FFE07530043796C /* StatisticsConfigure.json */,
 			);
 			path = StatisticsClass;
@@ -255,6 +253,8 @@
 				01122FF21FFCDDD90043796C /* EventModel.m */,
 				011230061FFDCC750043796C /* CrashLog.h */,
 				011230071FFDCC750043796C /* CrashLog.m */,
+				0146212C2003498E00F5F84F /* PageShowTrace.h */,
+				0146212D2003498E00F5F84F /* PageShowTrace.m */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -439,7 +439,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				011060B01FF47CEA00649178 /* ConfigureStatistics.plist in Resources */,
 				011060671FF3375900649178 /* LaunchScreen.storyboard in Resources */,
 				01122FE11FFC7E790043796C /* WebTestViewController.xib in Resources */,
 				0112300A1FFE07530043796C /* StatisticsConfigure.json in Resources */,
@@ -565,10 +564,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TraceStatisticsKit/Pods-TraceStatisticsKit-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/UICKeyChainStore/UICKeyChainStore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICKeyChainStore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +643,7 @@
 				01122FFB1FFCF50F0043796C /* PAirSandbox.m in Sources */,
 				011060AE1FF39BEC00649178 /* EventInfo.m in Sources */,
 				011060B31FF47D5800649178 /* StatisticsCacheManager.m in Sources */,
+				0146212E2003498E00F5F84F /* PageShowTrace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

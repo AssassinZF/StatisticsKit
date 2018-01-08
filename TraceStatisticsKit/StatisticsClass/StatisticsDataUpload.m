@@ -9,7 +9,8 @@
 #import "StatisticsDataUpload.h"
 #import "BNTraceStatistics.h"
 #import "ChunkUploadModel.h"
-
+#import "PageShowTrace.h"
+#import "StatisticsCacheManager.h"
 #pragma mark - Task Model
 
 @class UploadTask;
@@ -43,20 +44,39 @@ typedef void (^RTFailureBlock)(NSError *error);
 }
 - (void)postWithUrlString:(NSString *)url parameters:(id)parameters complection:(RTCompletioBlock)complectionBlock
 {
-    NSURL *nsurl = [NSURL URLWithString:url];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl];
-    //如果想要设置网络超时的时间的话，可以使用下面的方法：
-    //NSMutableURLRequest *mutableRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+    //test
+    ChunkUploadModel *model = (ChunkUploadModel *)parameters;
+    NSString *topstring = @"*************** 上报事件 ********************";
+    NSString *downstring = @"*************** 完成上报 ********************";
     
+    NSMutableString *string = @"".mutableCopy;
+    [string appendFormat:@"\n"];
+    [string appendString:topstring];
+    for (EventModel *item in model.dataArray) {
+        if([item isKindOfClass:[PageShowTrace class]]){
+            PageShowTrace *pageModel = (PageShowTrace *)item;
+            [string appendString:[NSString stringWithFormat:@"\n --%@",pageModel.pageClassName]];
+            [string appendString:[NSString stringWithFormat:@"\n --%@",pageModel.pageTitle]];
+            [string appendString:[NSString stringWithFormat:@"\n --%@",pageModel.eventID]];
+        }
+    }
+    [string appendFormat:@"\n"];
+    [string appendString:downstring];
+    
+    NSLog(@"%@", string);
+    complectionBlock(self,parameters,nil,nil);
+    
+    return;
+    NSURL *nsurl = [NSURL URLWithString:url];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl];
+    //如果想要设置网络超时的时间的话，可以使用下面的方法：
+    NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:nsurl cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
+
     //设置请求类型
     request.HTTPMethod = @"POST";
     
     //将需要的信息放入请求头 随便定义了几个
-//    [request setValue:@"xxx" forHTTPHeaderField:@"Authorization"];//token
-//    [request setValue:@"xxx" forHTTPHeaderField:@"Gis-Lng"];//坐标 lng
-//    [request setValue:@"xxx" forHTTPHeaderField:@"Gis-Lat"];//坐标 lat
-//    [request setValue:@"xxx" forHTTPHeaderField:@"Version"];//版本
-//    NSLog(@"POST-Header:%@",request.allHTTPHeaderFields);
+    [request setValue:@"xxx" forHTTPHeaderField:@"Authorization"];//token
     
     //把参数放到请求体内
     //    NSString *postStr = [XMNetWorkHelper parseParams:parameters];
@@ -113,11 +133,13 @@ static StatisticsDataUpload *instance = nil;
     UploadTask *task = [UploadTask taskData:data
                                 complection:^(UploadTask *task, NSDictionary *dic, NSURLResponse *response, NSError *error) {
                                     if ([BNTraceStatistics statisticsInstance].isLogEnabled) {
-                                        NSLog(@"\n 统计上报结果：\n identifier = %@ \n response = %@ ",task.data.identifier,dic);
+//                                        NSLog(@"\n 统计上报结果：\n identifier = %@ \n response = %@ ",task.data.identifier,dic);
                                     }
                                     if (error) {
                                         
                                     }else{
+//                                        NSLog(@"\n事件上报成功");
+                                        [[StatisticsCacheManager cacheManager] removeWaitUplaodData:task.data];
                                         
                                     }
                                 }];

@@ -7,9 +7,8 @@
 //
 
 #import "EventInfo.h"
-#import "iKYSerializationDefine.h"
 #import <objc/message.h>
 
 @implementation EventInfo
-iKY_AUTO_SERIALIZATION
+MJCodingImplementation
 @end

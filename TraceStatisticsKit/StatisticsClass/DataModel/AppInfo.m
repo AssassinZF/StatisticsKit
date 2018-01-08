@@ -7,8 +7,7 @@
 //
 
 #import "AppInfo.h"
-#import "iKYSerializationDefine.h"
 #import <objc/message.h>
 @implementation AppInfo
-iKY_AUTO_SERIALIZATION
+MJCodingImplementation
 @end
