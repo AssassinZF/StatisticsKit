@@ -109,6 +109,7 @@ Pod::Spec.new do |s|
   s.subspec 'Statistics' do |ss|
       ss.source_files = 'TraceStatisticsKit/StatisticsClass/*.{h,m}'
       ss.public_header_files = 'TraceStatisticsKit/StatisticsClass/*.h'
+      ss.dependency = 'MJExtension'
   end
 
   # s.source_files  = "Classes", "Classes/**/*.{h,m}"
@@ -153,7 +154,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "MJExtension"
+  # s.dependency "MJExtension"
 
 
 end
